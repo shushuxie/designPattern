@@ -14,12 +14,28 @@ public class Main {
         Order order = new Order(customer,address);
         order.getCustomer().printCustomer();
         order.getAddress().printAddress();
+
+
         // 框架方式获取
         Continer continer = new Continer();
         continer.init();
-        Class<?> clazz = Customer.class;
-        Object customerObj = continer.getServiceInstanceByClass(clazz);
-        System.out.println(customerObj);
+        // 通过构造器获取对象实例
+        String className = "org.reflect.Order";
+        String field = "customer";
+        Class<?> orderClass = Class.forName(className);
+        Object obj = continer.creatInstance(orderClass);
+        // 获取普通实例中自动注入的属性对象
+        Field customer1 = orderClass.getDeclaredField(field);
+        customer1.setAccessible(true);
+        Object o = customer1.get(obj);
+        Method[] methods = o.getClass().getMethods();
+        // 调用服务中的方法
+        for (Method method : methods) {
+            if (method.getDeclaredAnnotation(ReflectAutowired.class) != null) {
+                method.invoke(o);
+            }
+
+        }
 
     }
 }

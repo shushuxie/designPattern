@@ -7,12 +7,12 @@ import javax.xml.ws.Action;
  */
 public class Config {
 
-    @Action
+    @ReflectAutowired
     public Customer customer() {
         return new Customer("kill","333333");
     }
 
-    @Action
+    @ReflectAutowired
     public Address address() {
         return new Address("address","post code");
     }

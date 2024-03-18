@@ -14,4 +14,9 @@ public class Customer {
     public void printCustomer() {
         System.out.println("customer"+name+"====="+email);
     }
+
+    @ReflectAutowired
+    public void printAble() {
+        System.out.println("customer"+name+"====="+email);
+    }
 }
